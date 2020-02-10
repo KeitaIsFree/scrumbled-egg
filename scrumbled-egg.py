@@ -40,17 +40,25 @@ def show_todos():
     if len(todos)==0:
         print('Currently no TODOs')
         return
-    for todo in todos:
-        print('1. ',todo['title'])
+    for i,todo in enumerate(todos):
+        print(str(i+1)+'. ',todo['title'])
 
 def user_action():
-    global done
-    print(bg.green+'Press key:')
-    print('  '+bg.red+'I'+bg.black+': (I)nput new task\n  '+bg.red+'D'+bg.black+': Move task to (d)one\n  '+bg.red+'R'+bg.black+': (R)emove task\n  '+bg.red+'Q'+bg.black+': (Q)uit')
+    global done,todos
+    print(bg.green+'Press key:'+bg.black)
+    print('  '+bg.red+'A'+bg.black+': (A)dd new task\n  '+bg.red+'F'+bg.black+': (F)inish task\n  '+bg.red+'R'+bg.black+': (R)emove task\n  '+bg.red+'Q'+bg.black+': (Q)uit')
     key=input('Key:')
-    if key in ['I','i']:
+    if key in ['A','a']:
         title=input('Type title:')
         todos.append({'title':title})
+        print(bg.blue+'Adding new task...'+bg.black)
+    elif key in ['R','r']:
+        todo_title=input('Remove which task?: ')
+        if todo_title in [task['title'] for task in todos]:
+            todos=[todo for todo in todos if todo['title']!=todo_title]
+            print(bg.blue+'Successfully removed '+todo_title+bg.black)
+        else:
+            print('task does not exist')
     elif key in ['Q','q']:
         done=True
         
